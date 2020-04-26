@@ -4,6 +4,6 @@
 !*.sln
 !*.vcxproj
 !*.filters
-!*.gitignore
+!.gitignore
 !tool
 !*.txt
