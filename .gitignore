@@ -3,12 +3,13 @@
 
 !.gitignore
 
+!*.py
 !*.h
 !*.cpp
 !*.sln
 !*.vcxproj
 !*.filters
+!*.txt
 
 !*/
 
-!*.txt
