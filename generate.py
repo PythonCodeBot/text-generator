@@ -6,12 +6,12 @@ import pickle
 songLen = 8
 trainNum = 1000*10
 
-filePlace = 'C:/Users/User/Desktop/a/abcnews-date-text.csv'
-rowName = 'headline_text'
+#filePlace = 'C:/Users/User/Desktop/a/abcnews-date-text.csv'
+#rowName = 'headline_text'
 
-fileOpen = False
+#fileOpen = False
 
-filePlace.replace("\\", "/")
+#filePlace.replace("\\", "/")
 
 class saveClass:
     def __init__(self, save):
@@ -75,7 +75,7 @@ def generateWord(word):
                 if random.random() <= probability:
                     return key
 
-if (not fileOpen):
+def read_train_data(filePlace):
     with open(filePlace, mode='r', encoding='utf-8', errors='ignore') as csv_file:
         csv_reader = csv.DictReader(csv_file)
         for songIndex, row in enumerate(csv_reader):
@@ -113,19 +113,25 @@ if (not fileOpen):
     pickle.dump(classList ,fileObject)
     fileObject.close()
 
-else:
-
-    fileObject = open(filePlace,'r')
+def open_class(fle_place):
+    fileObject = open(fle_place, 'r')
     # load the object from the file into var b
     classList = pickle.load(fileObject)
 
-while True:
-    nextWord = (input("\nenter start word: "))
+    return classList
 
-    print("your song: ")
-    for x in range(songLen):
-        print(nextWord, end= " ")
-        nextWord = generateWord(nextWord)
+def main():
+    while True:
+        nextWord = (input("\nenter start word: "))
 
-        if nextWord == None:
-            nextWord =  random.choice(classList).word
+        print("your song: ")
+        for x in range(songLen):
+            print(nextWord, end= " ")
+            nextWord = generateWord(nextWord)
+
+            if nextWord == None:
+                nextWord =  random.choice(classList).word
+
+if __name__ == '__main__':
+    main()
+

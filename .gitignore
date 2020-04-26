@@ -1,0 +1,9 @@
+*
+!*.h
+!*.cpp
+!*.sln
+!*.vcxproj
+!*.filters
+!*.gitignore
+!tool
+!*.txt
