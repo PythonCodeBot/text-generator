@@ -41,7 +41,7 @@ class Word:
     def get_rand_word(self) -> Word:
         """
         get random word
-        :return: the word as class
+        :return: the word as class or none if don't have any
         """
         random_num = random.random()
 
@@ -50,6 +50,7 @@ class Word:
             chance = 1 - chance
             if chance <= random_num:
                 return word
+        return None
 
 
 class TextGenerator:
@@ -103,15 +104,17 @@ class TextGenerator:
 
     def generate_text(self, text_len: int, start_word: str=None) -> str:
         """
-        generate new random text
-        :param text_len:
-        :param start_word:
-        :return:
+        generate new 'random' text
+        :param text_len: how much words
+        :param start_word: the start of the text
+        :return: the new text
         """
         return_str = ""
 
-        if start_word is None or start_word not in self.words_dict.keys:
+        if start_word is None:
             start_word = self.get_random_word()
+        elif start_word not in self.words_dict.keys:
+            start_word = Word(start_word)
         else:
             start_word = self.words_dict[start_word]
 
@@ -126,28 +129,58 @@ class TextGenerator:
         return return_str
 
     def get_random_word(self) -> Word:
+        """
+        :return random word from the enter data
+        :return: random word
+        """
         return self.words_dict.random_value()
 
-    def do_word_exist(self, word):
+    def do_word_exist(self, word) -> bool:
+        """
+        check if word exist
+        :param word: which word to search
+        :return: if exist
+        """
         return word in self.words_dict.keys
 
-    def add_word(self, word: str):
+    def add_word(self, word: str) -> None:
+        """
+        add new word to data if not exist
+        :param word: which word to check and add
+        """
         if not self.do_word_exist(word):
             self.words_dict[word] = Word(word)
 
     def get_word(self, word: str) -> Word:
+        """
+        get word class from the data
+        :param word: which word to get
+        :return: the word as class 'Word'
+        """
+        # add if not exist
         self.add_word(word)
         return self.words_dict[word]
 
-    def add_connection(self, before: str, word: str):
+    def add_connection(self, before: str, word: str) -> None:
+        """
+        add data.
+        :param before: the origin word
+        :param word: the word after
+        """
         next_word = self.get_word(word)
         self.get_word(before).add_next_word(next_word)
 
-    def finish_adding(self):
+    def finish_adding(self) -> None:
+        """
+        tell to all the words to sort. this is how it make random by changes
+        """
         for value, key in self.words_dict.values:
             key.finish_adding()
 
-    def print_data(self):
+    def print_data(self) -> None:
+        """
+        print all the words and the next words times
+        """
         for key, value in self.words_dict.values:
             print(key, ":")
             for next_word in value.next_words.keys():

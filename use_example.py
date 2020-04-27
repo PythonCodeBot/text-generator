@@ -2,6 +2,11 @@ from generate import TextGenerator
 
 
 def keep_only_words(word: str) -> str:
+    """
+    clean the word
+    :param word: the word to fix
+    :return: only hebrew chars (no ;,. and so on)
+    """
     return_str = ""
     for char in word:
         if 1488 <= ord(char) <= 1514:
