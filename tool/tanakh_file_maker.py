@@ -39,7 +39,7 @@ def read_data(file_path):
     :return: the words
     """
 
-    forbidden_chars = ['*', '{', '{']
+    forbidden_chars = ['*', '{', '{', ')']
 
     for file_path in get_files(file_path):
     
