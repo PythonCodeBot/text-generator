@@ -9,14 +9,16 @@ from randomdict import RandomDict
 
 
 class Word:
-    """save the word and the next words"""
+    """
+    save the next words of this word and generate next word(get Word from generator)
+    """
 
     next_words: Dict[Word, int]
 
     def __init__(self, word: str) -> None:
         """
         init the class
-        :param word: which word is it
+        :param word: which word the class is.
         """
         self.word: str = word
         self.total_words: int = 0
@@ -24,23 +26,24 @@ class Word:
 
     def add_next_word(self, next_word: Word) -> None:
         """
-        add word to data
-        :param next_word: what to next word to come
+        add new next word to data
+        :param next_word: what the next word
         """
         self.next_words[next_word] += 1
         self.total_words += 1
 
     def finish_adding(self) -> None:
         """
-        close the adding. sort the next words for random choosing by chance
+        called when stop adding words.
+        sort the next words for random choosing by chance
         """
         orig_dict = self.next_words
         sorted_dict = {k: v for k, v in sorted(orig_dict.items(), key=lambda item: item[1])}
         self.next_words = OrderedDict(sorted_dict)
 
-    def get_rand_word(self) -> Word:
+    def get_next_word(self) -> Word:
         """
-        get random word
+        get the next word
         :return: the word as class or none if don't have any
         """
         random_num = random.random()
@@ -54,7 +57,9 @@ class Word:
 
 
 class TextGenerator:
-    """where the words data be store"""
+    """
+    save the words and generate text form the words
+    """
 
     def __init__(self):
         """
@@ -121,7 +126,7 @@ class TextGenerator:
         word_before: Word = start_word
         for _ in range(text_len):
             return_str += word_before.word + " "
-            word_before = word_before.get_rand_word()
+            word_before = word_before.get_next_word()
 
             if word_before is None:
                 word_before = self.get_random_word()
